@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SpeakWise – Creative Speaking Assessment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Friendlier Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Baloo+2:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Logo-inspired colours */
+      --sw-deep-blue: #00448f;
+      --sw-mid-blue: #0072c6;
+      --sw-deep-green: #05964c;
+      --sw-light-green: #46c96f;
+      --sw-soft-yellow: #ffe89a;
+      --sw-bg: #f4f8ff;
+      --sw-text: #1b2740;
+
+      --sw-radius-xl: 28px;
+      --sw-radius-lg: 20px;
+      --sw-radius-md: 14px;
+      --sw-shadow-soft: 0 20px 45px rgba(0, 40, 80, 0.18);
+      --sw-transition-fast: 0.2s ease-out;
+      --sw-transition-med: 0.5s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, #e4f0ff 0%, #fdfdff 40%, #f4f8ff 100%),
+        linear-gradient(160deg, #ffffff, #f4f8ff);
+      color: var(--sw-text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .app-shell {
+      max-width: 1100px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: var(--sw-radius-xl);
+      box-shadow: var(--sw-shadow-soft);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Organic colour blobs behind content */
+    .app-shell::before,
+    .app-shell::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(30px);
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    .app-shell::before {
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(0, 114, 198, 0.38), transparent 70%);
+      top: -80px;
+      left: -60px;
+      animation: blobMove1 12s infinite alternate;
+    }
+
+    .app-shell::after {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(5, 150, 76, 0.36), transparent 70%);
+      bottom: -80px;
+      right: -50px;
+      animation: blobMove2 10s infinite alternate;
+    }
+
+    @keyframes blobMove1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(20px, 10px) scale(1.05); }
+    }
+
+    @keyframes blobMove2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-15px, -10px) scale(1.06); }
+    }
+
+    /* Header with playful speech bubble */
+    .sw-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 30px 18px;
+      background: radial-gradient(circle at 0% 0%, #0072c6 0%, #00448f 40%, #003366 100%);
+      color: #ffffff;
+      position: relative;
+    }
+
+    .sw-header::after {
+      content: "";
+      position: absolute;
+      right: 60px;
+      bottom: -16px;
+      width: 120px;
+      height: 40px;
+      background: #ffffff;
+      border-radius: 16px 16px 16px 4px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+      opacity: 0.2;
+    }
+
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo-wrapper {
+      position: relative;
+    }
+
+    .logo-wrapper img {
+      height: 78px;
+      width: auto;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
+      animation: logoFloat 4.5s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Mic halo ring */
+    .mic-ring {
+      position: absolute;
+      inset: -10px;
+      border-radius: 999px;
+      border: 2px dashed rgba(255, 255, 255, 0.6);
+      animation: micRingPulse 6s linear infinite;
+    }
+
+    @keyframes micRingPulse {
+      0% { transform: scale(0.95) rotate(0deg); opacity: 0.5; }
+      100% { transform: scale(1.05) rotate(5deg); opacity: 1; }
+    }
+
+    .brand-text h1 {
+      font-family: "Baloo 2", system-ui;
+      font-size: 1.8rem;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 0.9rem;
+    }
+
+    .header-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      margin-bottom: 7px;
+    }
+
+    .mic-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: var(--sw-soft-yellow);
+      box-shadow: 0 0 0 0 rgba(255, 232, 154, 0.7);
+      animation: livePulse 1.8s infinite;
+    }
+
+    @keyframes livePulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 232, 154, 0.8); }
+      100% { box-shadow: 0 0 0 14px rgba(255, 232, 154, 0); }
+    }
+
+    .header-right span {
+      opacity: 0.92;
+    }
+
+    /* Tab navigation with colourful underline and icons */
+    .tab-bar {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 14px 26px 4px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), #ffffff);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+      position: relative;
+    }
+
+    .tab-button {
+      position: relative;
+      padding: 9px 20px 12px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(0, 68, 143, 0.03);
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: #4b5a7a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color var(--sw-transition-fast), background var(--sw-transition-fast), transform var(--sw-transition-fast), box-shadow var(--sw-transition-fast);
+    }
+
+    .tab-icon {
+      font-size: 1.1rem;
+    }
+
+    .tab-button::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--sw-mid-blue), var(--sw-light-green));
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform var(--sw-transition-med);
+    }
+
+    .tab-button:hover {
+      background: rgba(0, 68, 143, 0.08);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .tab-button.active {
+      color: var(--sw-deep-blue);
+      font-weight: 600;
+      background: rgba(4, 170, 109, 0.12);
+    }
+
+    .tab-button.active::after {
+      transform: scaleX(1);
+    }
+
+    .tab-hint {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #7a869f;
+      padding-bottom: 12px;
+    }
+
+    /* Main content */
+    .content {
+      padding: 22px 26px 26px;
+      background:
+        linear-gradient(180deg, #ffffff, var(--sw-bg)),
+        radial-gradient(circle at 80% 0%, rgba(5, 150, 76, 0.08), transparent 65%);
+    }
+
+    .tab-panel {
+      display: none;
+      animation: panelFadeIn 0.7s var(--sw-transition-med);
+    }
+
+    .tab-panel.active {
+      display: grid;
+    }
+
+    @keyframes panelFadeIn {
+      0% { opacity: 0; transform: translateY(16px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Layout: two responsive columns */
+    .panel-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .panel-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: var(--sw-radius-lg);
+      padding: 18px 18px 16px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Curved highlight strip */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -30px;
+      left: -60px;
+      width: 180px;
+      height: 80px;
+      background: radial-gradient(circle at 0% 0%, rgba(0, 114, 198, 0.16), transparent 70%);
+      transform: rotate(-8deg);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      background: rgba(4, 170, 109, 0.1);
+      color: var(--sw-deep-green);
+      border: 1px solid rgba(4, 170, 109, 0.45);
+    }
+
+    .card-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--sw-deep-blue);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: #6b778d;
+    }
+
+    h3.section-title {
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7a869f;
+      margin-bottom: 8px;
+      margin-top: 6px;
+    }
+
+    .field-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .field {
+      flex: 1 1 150px;
+      min-width: 150px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #8b95aa;
+      margin-bottom: 4px;
+    }
+
+    .select,
+    .input,
+    .textarea {
+      width: 100%;
+      border-radius: var(--sw-radius-md);
+      border: 1px solid rgba(15, 23, 42, 0.09);
+      padding: 8px 11px;
+      font-size: 0.9rem;
+      outline: none;
+      background: #f9fbff;
+      transition: border-color var(--sw-transition-fast), box-shadow var(--sw-transition-fast), background var(--sw-transition-fast), transform var(--sw-transition-fast);
+    }
+
+    .select:focus,
+    .input:focus,
+    .textarea:focus {
+      border-color: var(--sw-mid-blue);
+      box-shadow: 0 0 0 1px rgba(0, 114, 198, 0.28);
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.8rem;
+    }
+
+    .badge {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(0, 68, 143, 0.08);
+      color: var(--sw-deep-blue);
+    }
+
+    .badge-accent {
+      background: rgba(4, 170, 109, 0.12);
+      color: var(--sw-deep-green);
+    }
+
+    /* Buttons with speaking flair */
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform var(--sw-transition-fast), box-shadow var(--sw-transition-fast), background var(--sw-transition-fast), color var(--sw-transition-fast);
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.3), transparent 70%);
+      opacity: 0;
+      transition: opacity var(--sw-transition-fast), transform var(--sw-transition-fast);
+      transform: translateX(-20%);
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--sw-mid-blue), var(--sw-light-green));
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(0, 68, 143, 0.35);
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: var(--sw-deep-blue);
+      border: 1px solid rgba(0, 68, 143, 0.35);
+    }
+
+    .btn-danger {
+      background: linear-gradient(120deg, #c62828, #ef5350);
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(198, 40, 40, 0.4);
+    }
+
+    .btn-soft {
+      background: rgba(4, 170, 109, 0.09);
+      color: var(--sw-deep-green);
+      border: 1px solid rgba(4, 170, 109, 0.4);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn:hover::after {
+      opacity: 0.9;
+      transform: translateX(0);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-icon {
+      font-size: 1rem;
+    }
+
+    /* Speaking visual elements: waveform & status */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #6b778d;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(0, 68, 143, 0.09);
+      color: var(--sw-deep-blue);
+      font-size: 0.78rem;
+    }
+
+    .wave {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 18px;
+    }
+
+    .wave span {
+      width: 3px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--sw-soft-yellow), var(--sw-mid-blue));
+      animation: waveMove 1.4s ease-in-out infinite;
+      transform-origin: bottom;
+    }
+
+    .wave span:nth-child(2) { animation-delay: 0.12s; }
+    .wave span:nth-child(3) { animation-delay: 0.24s; }
+    .wave span:nth-child(4) { animation-delay: 0.36s; }
+    .wave span:nth-child(5) { animation-delay: 0.48s; }
+
+    @keyframes waveMove {
+      0%, 100% { height: 6px; opacity: 0.65; }
+      50% { height: 18px; opacity: 1; }
+    }
+
+    /* Assessment blocks */
+    .score-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .score-card {
+      flex: 1 1 120px;
+      min-width: 120px;
+      border-radius: var(--sw-radius-md);
+      background: #f7fbff;
+      padding: 8px 10px;
+      border: 1px solid rgba(0, 68, 143, 0.08);
+    }
+
+    .score-label {
+      font-size: 0.8rem;
+      color: #7a869f;
+      margin-bottom: 4px;
+    }
+
+    .score-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--sw-deep-blue);
+    }
+
+    .score-extra {
+      font-size: 0.75rem;
+      color: #8b95aa;
+      margin-top: 2px;
+    }
+
+    .feedback-box {
+      margin-top: 12px;
+      border-radius: var(--sw-radius-md);
+      background: #ffffff;
+      border: 1px dashed rgba(15, 23, 42, 0.22);
+      padding: 10px 12px;
+      font-size: 0.85rem;
+      color: #6b778d;
+      position: relative;
+    }
+
+    .feedback-box::before {
+      content: "💬";
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      opacity: 0.9;
+    }
+
+    .feedback-box strong {
+      color: var(--sw-deep-blue);
+    }
+
+    /* Teacher table placeholder */
+    .table-wrap {
+      margin-top: 10px;
+      border-radius: var(--sw-radius-md);
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    thead {
+      background: linear-gradient(120deg, var(--sw-deep-blue), var(--sw-mid-blue));
+      color: #ffffff;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f7fbff;
+    }
+
+    tbody tr:hover {
+      background: rgba(4, 170, 109, 0.06);
+    }
+
+    .tag-band {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(4, 170, 109, 0.12);
+      color: var(--sw-deep-green);
+      font-size: 0.75rem;
+    }
+
+    .tag-time {
+      font-size: 0.78rem;
+      color: #7a869f;
+    }
+
+    .small-link {
+      font-size: 0.8rem;
+      color: var(--sw-mid-blue);
+      text-decoration: none;
+    }
+
+    .small-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    .sw-footer {
+      padding: 12px 26px 16px;
+      font-size: 0.8rem;
+      color: #8b95aa;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(15, 23, 42, 0.06);
+      background: #ffffff;
+    }
+
+    @media (max-width: 640px) {
+      .sw-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .header-right {
+        text-align: left;
+      }
+      .sw-footer {
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- HEADER -->
+    <header class="sw-header">
+      <div class="logo-block">
+        <div class="logo-wrapper">
+          <!-- Update src to match your logo filename -->
+          <img src="speakwise-logo.jpg" alt="SpeakWise Logo">
+          <span class="mic-ring"></span>
+        </div>
+        <div class="brand-text">
+          <h1>SpeakWise – Speaking Assessment</h1>
+          <p>A colourful space to practise speaking, listen, and reflect with CEFR bands.</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-pill">
+          <span class="mic-dot"></span>
+          <span>Live Speaking Session Ready</span>
+        </div>
+        <div>
+          <span>Fluency · Grammar · Vocabulary · Pronunciation · Interaction</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- TAB BAR -->
+    <nav class="tab-bar">
+      <button class="tab-button active" data-target="#student-panel">
+        <span class="tab-icon">🎓</span>
+        <span>Student Dashboard</span>
+      </button>
+      <button class="tab-button" data-target="#teacher-panel">
+        <span class="tab-icon">👨‍🏫</span>
+        <span>Teacher Dashboard</span>
+      </button>
+    </nav>
+    <div class="tab-hint">
+      Switch between the student speaking journey and the teacher assessment view.
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+      <!-- STUDENT PANEL -->
+      <section id="student-panel" class="tab-panel active">
+        <div class="panel-grid">
+          <!-- LEFT: Student profile + task -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span>🎓 Student Speaking Dashboard</span>
+                  <span class="pill">Learner View</span>
+                </div>
+                <div class="card-subtitle">
+                  Build your speaking profile, choose your accent, then generate topics to practise.
+                </div>
+              </div>
+            </div>
+
+            <h3 class="section-title">Profile</h3>
+            <div class="field-row">
+              <div class="field">
+                <label for="level">Level</label>
+                <select id="level" class="select">
+                  <option>Primary School</option>
+                  <option>Secondary School</option>
+                  <option>College / University</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="accent">Accent preference</label>
+                <select id="accent" class="select">
+                  <option>British 🇬🇧</option>
+                  <option>American 🇺🇸</option>
+                  <option>Neutral / Mixed</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="target-cefr">Target CEFR</label>
+                <select id="target-cefr" class="select">
+                  <option>A1 – Beginner</option>
+                  <option>A2 – Elementary</option>
+                  <option>B1 – Intermediate</option>
+                  <option>B2 – Upper-intermediate</option>
+                  <option>C1 – Advanced</option>
+                  <option>C2 – Proficient</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="badge-row">
+              <span class="badge">🎯 Fluency & pace</span>
+              <span class="badge">🧠 Grammar accuracy</span>
+              <span class="badge">🗣 Vocabulary range</span>
+              <span class="badge badge-accent">🎧 Pronunciation & clarity</span>
+            </div>
+
+            <h3 class="section-title">Speaking task</h3>
+            <p class="card-subtitle">
+              Click “Generate Random Topic” and speak for 1–2 minutes. Focus on clear ideas and natural speaking.
+            </p>
+
+            <div class="button-row">
+              <button class="btn btn-primary">
+                <span class="btn-icon">🎲</span>
+                <span>Generate Random Topic</span>
+              </button>
+              <button class="btn btn-soft">
+                <span class="btn-icon">💡</span>
+                <span>View Sample Prompts</span>
+              </button>
+            </div>
+
+            <div class="field">
+              <label for="topic">Current topic</label>
+              <input id="topic" class="input" type="text" placeholder="E.g. Describe a time you felt proud of your speaking…">
+            </div>
+          </div>
+
+          <!-- RIGHT: Recording + scores -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>🎤 Recording Panel</span>
+                <span class="pill">Live Speaking</span>
+              </div>
+              <div class="wave" aria-label="Speaking waveform animation">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <p class="card-subtitle">
+              Use this panel during a speaking assessment: start speaking, stop & assess, then review feedback.
+            </p>
+
+            <div class="button-row">
+              <button class="btn btn-primary">
+                <span class="btn-icon">⏺</span>
+                <span>Start Speaking</span>
+              </button>
+              <button class="btn btn-danger">
+                <span class="btn-icon">⛔</span>
+                <span>Stop & Assess</span>
+              </button>
+              <button class="btn btn-outline">
+                <span class="btn-icon">📤</span>
+                <span>Submit Recording</span>
+              </button>
+            </div>
+
+            <div class="status-bar">
+              <div class="status-pill">
+                <span>Status:</span>
+                <strong>Waiting</strong>
+              </div>
+              <div class="tag-time">Recommended speaking time: 1–2 minutes</div>
+            </div>
+
+            <h3 class="section-title" style="margin-top: 14px;">Live transcript</h3>
+            <textarea class="textarea" placeholder="Live transcript will appear here as you speak."></textarea>
+
+            <h3 class="section-title" style="margin-top: 14px;">Assessment scores</h3>
+            <div class="score-grid">
+              <div class="score-card">
+                <div class="score-label">Fluency</div>
+                <div class="score-value">0</div>
+                <div class="score-extra">Flow, pauses & speed</div>
+              </div>
+              <div class="score-card">
+                <div class="score-label">Grammar</div>
+                <div class="score-value">0</div>
+                <div class="score-extra">Accuracy & range</div>
+              </div>
+              <div class="score-card">
+                <div class="score-label">Vocabulary</div>
+                <div class="score-value">0</div>
+                <div class="score-extra">Variety & appropriacy</div>
+              </div>
+              <div class="score-card">
+                <div class="score-label">CEFR Level</div>
+                <div class="score-value">A1</div>
+                <div class="score-extra">Overall speaking band</div>
+              </div>
+            </div>
+
+            <div class="feedback-box">
+              <strong>Detailed feedback</strong><br>
+              No feedback yet. Start speaking, stop & assess, then your teacher will add comments on fluency, grammar, vocabulary and pronunciation.
+            </div>
+
+            <div class="status-bar" style="margin-top: 8px;">
+              <span>Submission status: Waiting for assessment…</span>
+              <a href="#" class="small-link">View previous recording</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TEACHER PANEL -->
+      <section id="teacher-panel" class="tab-panel">
+        <div class="panel-grid">
+          <!-- LEFT: Teacher controls -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span>👨‍🏫 Teacher Dashboard</span>
+                  <span class="pill">Assessor View</span>
+                </div>
+                <div class="card-subtitle">
+                  Monitor student recordings, transcripts and feedback in one colourful overview.
+                </div>
+              </div>
+            </div>
+
+            <h3 class="section-title">Assessment tools</h3>
+            <p class="card-subtitle">
+              Use these tools to manage classes, export results and track CEFR speaking progress.
+            </p>
+
+            <div class="button-row">
+              <button class="btn btn-primary">
+                <span class="btn-icon">📥</span>
+                <span>Download Excel</span>
+              </button>
+              <button class="btn btn-outline">
+                <span class="btn-icon">🧪</span>
+                <span>Rubric: Speaking Bands</span>
+              </button>
+              <button class="btn btn-soft">
+                <span class="btn-icon">⚙️</span>
+                <span>Class Settings</span>
+              </button>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="class-filter">Class / group</label>
+                <select id="class-filter" class="select">
+                  <option>All groups</option>
+                  <option>Primary – 5A</option>
+                  <option>Primary – 6B</option>
+                  <option>Secondary – 2C</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="band-filter">CEFR band filter</label>
+                <select id="band-filter" class="select">
+                  <option>All bands</option>
+                  <option>A1</option>
+                  <option>A2</option>
+                  <option>B1</option>
+                  <option>B2</option>
+                  <option>C1</option>
+                  <option>C2</option>
+                </select>
+              </div>
+            </div>
+
+            <h3 class="section-title">Feedback template</h3>
+            <textarea class="textarea" placeholder="E.g. 'You spoke clearly and used good examples. Next time, try to use more linking words such as however, on the other hand, therefore.'"></textarea>
+
+            <div class="status-bar" style="margin-top: 8px;">
+              <span>Tip: Comment on fluency, grammar, vocabulary, pronunciation & interaction.</span>
+              <a href="#" class="small-link">Save feedback template</a>
+            </div>
+          </div>
+
+          <!-- RIGHT: Table of recordings -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>📂 Recent Speaking Assessments</span>
+              </div>
+              <div class="card-subtitle">
+                Overview of students, topics, transcripts, feedback and bands.
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Topic</th>
+                    <th>Transcript</th>
+                    <th>Feedback</th>
+                    <th>Band</th>
+                    <th>Play</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ali</td>
+                    <td>Describe your favourite teacher</td>
+                    <td><a href="#" class="small-link">View transcript</a></td>
+                    <td><a href="#" class="small-link">Open feedback</a></td>
+                    <td><span class="tag-band">B1</span></td>
+                    <td><button class="btn btn-outline"><span class="btn-icon">▶️</span>Play</button></td>
+                    <td><span class="tag-time">2:10</span></td>
+                  </tr>
+                  <tr>
+                    <td>Siti</td>
+                    <td>Talk about a memorable trip</td>
+                    <td><a href="#" class="small-link">View transcript</a></td>
+                    <td><a href="#" class="small-link">Open feedback</a></td>
+                    <td><span class="tag-band">A2</span></td>
+                    <td><button class="btn btn-outline"><span class="btn-icon">▶️</span>Play</button></td>
+                    <td><span class="tag-time">1:45</span></td>
+                  </tr>
+                  <tr>
+                    <td>Mei Ling</td>
+                    <td>Explain your daily routine</td>
+                    <td><a href="#" class="small-link">View transcript</a></td>
+                    <td><a href="#" class="small-link">Open feedback</a></td>
+                    <td><span class="tag-band">B2</span></td>
+                    <td><button class="btn btn-outline"><span class="btn-icon">▶️</span>Play</button></td>
+                    <td><span class="tag-time">3:05</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="status-bar" style="margin-top: 10px;">
+              <span>Hint: Export Excel after each assessment cycle to track progress.</span>
+              <span>Auto-save enabled · Last sync: just now</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="sw-footer">
+      <span>SpeakWise · Speaking Assessment · CEFR aligned</span>
+      <span>Designed for confident speakers in Kulim, Kedah and beyond.</span>
+    </footer>
+  </div>
+
+  <!-- Simple tab switching script -->
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const panels = document.querySelectorAll(".tab-panel");
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-target");
+
+        tabButtons.forEach(b => b.classList.remove("active"));
+        panels.forEach(p => p.classList.remove("active"));
+
+        btn.classList.add("active");
+        const panel = document.querySelector(target);
+        if (panel) {
+          panel.classList.add("active");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
